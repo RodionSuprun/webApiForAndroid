@@ -1,0 +1,11 @@
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\bin\Debug\netcoreapp2.0\WebApiForAndroid.deps.json
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\bin\Debug\netcoreapp2.0\WebApiForAndroid.runtimeconfig.json
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\bin\Debug\netcoreapp2.0\WebApiForAndroid.runtimeconfig.dev.json
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\bin\Debug\netcoreapp2.0\WebApiForAndroid.dll
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\bin\Debug\netcoreapp2.0\WebApiForAndroid.pdb
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.csproj.CoreCompileInputs.cache
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.AssemblyInfoInputs.cache
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.AssemblyInfo.cs
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.dll
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.pdb
+D:\Student RODION\КУРС 3 ЧАСТЬ 2\Android\WebApiForAndroid\WebApiForAndroid\WebApiForAndroid\obj\Debug\netcoreapp2.0\WebApiForAndroid.csprojAssemblyReference.cache

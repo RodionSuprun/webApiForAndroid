@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Список </title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    
+    <h2>Список </h2>
+    <form name="hotelForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group">
+            <label for="name">Имя:</label>
+            <input class="form-control" name="name" />
+        </div>
+        <div class="form-group">
+            <label for="county">Страна:</label>
+            <input class="form-control" name="county" />
+        </div>
+
+        <div class="form-group">
+            <label for="desc">Описание:</label>
+            <input class="form-control" name="desc" />
+        </div>
+        <div class="form-group">
+            <label for="numberOfNumbers">Номера:</label>
+            <input class="form-control" name="numberOfNumbers" />
+        </div>
+        <div class="form-group">
+            <label for="numberOfStars">Звезды:</label>
+            <input class="form-control" name="numberOfStars" />
+        </div>
+        <div class="form-group">
+            <label for="price">Цена:</label>
+            <input class="form-control" name="price" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="photo">Фотография:</label>
+            <input class="form-control" name="photo" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+            <a id="reset" class="btn btn-sm btn-primary">Сбросить</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead><tr><th>Id</th><th>Название</th><th>Страна</th><th>Описание</th><th>Номера</th><th>Звезды</th><th>Цена</th><th>Фото</th></tr></thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        // Получение всех пользователей
+        function GetHotels() {
+            $.ajax({
+                url: '/api/hotels',
+                type: 'GET',
+                contentType: "application/json",
+                success: function (hotels) {
+                    var rows = "";
+                    $.each(hotels, function (index, hotel) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(hotel);
+                    })
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+        // Получение одного пользователя
+        function GetHotel(id) {
+            $.ajax({
+                url: '/api/hotels/' + id,
+                type: 'GET',
+                contentType: "application/json",
+                success: function (hotel) {
+                    var form = document.forms["hotelForm"];
+                    form.elements["id"].value = hotel.id;
+                    form.elements["name"].value = hotel.name;
+                    form.elements["county"].value = hotel.county;
+                    form.elements["desc"].value = hotel.desc;
+                    form.elements["numberOfNumbers"].value = hotel.numberOfNumbers;
+                    form.elements["numberOfStars"].value = hotel.numberOfStars;
+                    form.elements["price"].value = hotel.price;
+                    form.elements["photo"].value = hotel.photo;
+
+                }
+            });
+        }
+        // Добавление пользователя
+        function CreateHotel(hotelName, hotelCountry, hotelDesc, hotelNumberOfNumbers, hotelNumberOfStars, hotelPrice , hotelPhoto) {
+            $.ajax({
+                url: "api/hotels",
+                contentType: "application/json",
+                method: "POST",
+                data: JSON.stringify({
+                    name: hotelName,
+                    county: hotelCountry,
+                    desc: hotelDesc,
+                    numberOfNumbers: hotelNumberOfNumbers,
+                    numberOfStars: hotelNumberOfStars,
+                    price: hotelPrice,
+                    photo: hotelPhoto
+                }),
+                success: function (hotel) {
+                    reset();
+                    $("table tbody").append(row(hotel));
+                }
+            })
+        }
+        // Изменение пользователя
+        function EditHotel(hotelId, hotelName, hotelCountry, hotelDesc, hotelNumberOfNumbers, hotelNumberOfStars, hotelPrice, hotelPhoto) {
+            $.ajax({
+                url: "api/hotels",
+                contentType: "application/json",
+                method: "PUT",
+                data: JSON.stringify({
+                    id: hotelId,
+                    name: hotelName,
+                    county: hotelCountry,
+                    desc: hotelDesc,
+                    numberOfNumbers: hotelNumberOfNumbers,
+                    numberOfStars: hotelNumberOfStars,
+                    price: hotelPrice,
+                    photo: hotelPhoto
+                }),
+                success: function (hotel) {
+                    reset();
+                    $("tr[data-rowid='" + hotel.id + "']").replaceWith(row(hotel));
+                }
+            })
+        }
+
+        // сброс формы
+        function reset() {
+            var form = document.forms["hotelForm"];
+            form.reset();
+            form.elements["id"].value = 0;
+        }
+
+        // Удаление пользователя
+        function DeleteHotel(id) {
+            $.ajax({
+                url: "api/hotels/" + id,
+                contentType: "application/json",
+                method: "DELETE",
+                success: function (hotel) {
+                    $("tr[data-rowid='" + hotel.id + "']").remove();
+                }
+            })
+        }
+        // создание строки для таблицы
+        var row = function (hotel) {
+            return "<tr data-rowid='" + hotel.id + "'><td>" + hotel.id + "</td>" +
+                "<td>" + hotel.name + "</td> <td>" + hotel.county + "</td>" +
+                "<td>" + hotel.desc + "</td> <td>" + hotel.numberOfNumbers + "</td>" +
+                "<td>" + hotel.numberOfStars + "</td> <td>" + hotel.price + "</td><td>" + hotel.photo + "</td>"
+                +
+                "<td><a class='editLink' data-id='" + hotel.id + "'>Изменить</a> | " +
+                "<a class='removeLink' data-id='" + hotel.id + "'>Удалить</a></td></tr>";
+        }
+        // сброс значений формы
+        $("#reset").click(function (e) {
+
+            e.preventDefault();
+            reset();
+        })
+
+        // отправка формы
+        $("form").submit(function (e) {
+            e.preventDefault();
+            var id = this.elements["id"].value;
+            var name = this.elements["name"].value;
+            var county = this.elements["county"].value;
+            var desc = this.elements["desc"].value;
+            var numberOfNumbers = this.elements["numberOfNumbers"].value;
+            var numberOfStars = this.elements["numberOfStars"].value;
+            var price = this.elements["price"].value;
+            var photo = this.elements["photo"].value;
+            if (id == 0)
+                CreateHotel(name, county, desc, numberOfNumbers, numberOfStars, price, photo );
+            else
+                EditHotel(id, name, county, desc, numberOfNumbers, numberOfStars, price, photo );
+        });
+
+        // нажимаем на ссылку Изменить
+        $("body").on("click", ".editLink", function () {
+            var id = $(this).data("id");
+            GetHotel(id);
+        })
+        // нажимаем на ссылку Удалить
+        $("body").on("click", ".removeLink", function () {
+            var id = $(this).data("id");
+            DeleteHotel(id);
+        })
+
+        // загрузка пользователей
+        GetHotels();
+
+    </script>
+</body>
+</html>
